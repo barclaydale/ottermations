@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ottermations — Daily Otter Affirmations</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --teal: #4ABCC4;
+      --teal-dark: #2E9DA6;
+      --teal-light: #B8E8EC;
+      --pink: #FF8FA3;
+      --pink-light: #FFDDE5;
+      --gold: #F5C842;
+      --green: #6DBF82;
+      --blue: #6CB4E4;
+      --cream: #FFF8EE;
+      --warm-white: #FFFBF5;
+      --brown-dark: #7B5B3A;
+      --brown-mid: #C4966E;
+      --brown-light: #F0D9BE;
+      --text-dark: #2D1B0E;
+      --text-mid: #6B4232;
+      --text-light: #9E7B6B;
+      --shadow: rgba(123,91,58,0.12);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--cream);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* ── HEADER ── */
+    .site-header {
+      background: linear-gradient(160deg, #3BC4CE 0%, #2E9DA6 45%, #5B8C6E 100%);
+      padding: 3.5rem 1.5rem 5.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .header-deco {
+      position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+    }
+    .hbubble {
+      position: absolute; border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      animation: hbFloat linear infinite;
+    }
+    @keyframes hbFloat {
+      0%   { transform: translateY(110%) scale(0.7); opacity: 0; }
+      10%  { opacity: 0.8; }
+      90%  { opacity: 0.3; }
+      100% { transform: translateY(-110%) scale(1.3); opacity: 0; }
+    }
+    .site-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2.8rem, 8vw, 5.5rem);
+      color: white;
+      text-shadow: 3px 4px 0 rgba(0,0,0,0.15);
+      line-height: 1;
+      position: relative; z-index: 1;
+    }
+    .site-tagline {
+      color: rgba(255,255,255,0.92);
+      font-size: clamp(0.95rem, 2.5vw, 1.25rem);
+      margin-top: 0.75rem;
+      font-weight: 700;
+      position: relative; z-index: 1;
+    }
+    .wave-divider {
+      position: absolute; bottom: -1px; left: 0; right: 0; height: 64px;
+    }
+
+    /* ── MAIN ── */
+    .main-content { max-width: 1080px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* ── TODAY BANNER ── */
+    .today-banner { text-align: center; padding: 2.5rem 0 0.5rem; }
+    .today-label {
+      font-size: 0.78rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 3px; color: var(--teal-dark); margin-bottom: 0.4rem;
+    }
+    .today-date {
+      font-family: 'Fredoka One', cursive;
+      font-size: 2rem; color: var(--brown-dark);
+    }
+    .today-sub { font-size: 0.95rem; color: var(--text-light); margin-top: 0.3rem; }
+
+    /* ── CARDS ── */
+    .affirmations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.75rem;
+      margin: 2rem 0 3.5rem;
+    }
+    .otter-card {
+      background: white; border-radius: 28px;
+      padding: 2rem 1.75rem;
+      box-shadow: 0 6px 28px var(--shadow);
+      text-align: center;
+      transition: transform 0.35s cubic-bezier(.34,1.56,.64,1), box-shadow 0.3s;
+      animation: cardIn 0.65s ease forwards; opacity: 0;
+      position: relative; overflow: hidden;
+    }
+    .otter-card::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 5px; border-radius: 28px 28px 0 0;
+    }
+    .otter-card.looks::before  { background: linear-gradient(90deg,#FF8FA3,#FFB5C2); }
+    .otter-card.career::before { background: linear-gradient(90deg,#6CB4E4,#93CFEE); }
+    .otter-card.wellness::before { background: linear-gradient(90deg,#6DBF82,#95D4A6); }
+    .otter-card:nth-child(1) { animation-delay: 0.08s; }
+    .otter-card:nth-child(2) { animation-delay: 0.22s; }
+    .otter-card:nth-child(3) { animation-delay: 0.36s; }
+    .otter-card:hover { transform: translateY(-10px) scale(1.01); box-shadow: 0 18px 48px var(--shadow); }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .card-badge {
+      display: inline-block; font-size: 0.72rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 2.5px;
+      padding: 0.28rem 0.9rem; border-radius: 20px; margin-bottom: 1.1rem;
+    }
+    .looks  .card-badge { background: var(--pink-light); color: #D63B59; }
+    .career .card-badge { background: #D6EAFA; color: #2E6FA8; }
+    .wellness .card-badge { background: #D4F0DC; color: #2E7A46; }
+    .otter-art { width: 168px; height: 158px; margin: 0 auto 1rem; }
+    .otter-art svg { width: 100%; height: 100%; }
+    .otter-name-tag {
+      font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+      color: var(--brown-mid); margin-bottom: 1rem;
+    }
+    .affirmation-quote {
+      font-size: 1rem; line-height: 1.75;
+      color: var(--text-mid); font-weight: 600; font-style: italic;
+    }
+    .affirmation-quote::before {
+      content: '\201C'; font-family: Georgia, serif; font-size: 2.8rem;
+      color: var(--brown-light); line-height: 0; vertical-align: -0.45em; margin-right: 2px;
+    }
+    .affirmation-quote::after { content: '\201D'; font-family: Georgia, serif; font-size: 1.2rem; color: var(--brown-light); }
+
+    /* ── CALENDAR ── */
+    .calendar-section {
+      background: white; border-radius: 28px;
+      padding: 2.25rem 2rem; box-shadow: 0 6px 28px var(--shadow);
+      margin-bottom: 3rem;
+    }
+    .sec-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.75rem; }
+    .sec-icon {
+      width: 46px; height: 46px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--teal-light), var(--teal));
+      display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+    .sec-title { font-family: 'Fredoka One', cursive; font-size: 1.65rem; color: var(--brown-dark); }
+    .sec-sub { font-size: 0.88rem; color: var(--text-light); margin-top: 0.1rem; }
+
+    .cal-day-headers {
+      display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
+      margin-bottom: 4px;
+    }
+    .cal-dh {
+      text-align: center; font-size: 0.7rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 1px;
+      color: var(--text-light); padding: 0.4rem 0;
+    }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+    .cal-cell {
+      aspect-ratio: 1; border-radius: 12px; display: flex;
+      flex-direction: column; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.88rem; cursor: default;
+      transition: all 0.2s ease; border: 2px solid transparent;
+      position: relative; user-select: none;
+    }
+    .cal-cell.has-content { background: var(--cream); cursor: pointer; }
+    .cal-cell.has-content:hover { background: var(--teal-light); border-color: var(--teal); transform: scale(1.07); }
+    .cal-cell.is-today {
+      background: var(--teal); color: white;
+      box-shadow: 0 4px 16px rgba(74,188,196,0.45);
+    }
+    .cal-cell.is-today:hover { background: var(--teal-dark); }
+    .cal-cell.future { color: var(--brown-light); opacity: 0.4; }
+
+    .cal-cell.selected { border-color: var(--brown-mid); background: var(--brown-light); }
+    .cal-mini-otter { font-size: 0.95rem; line-height: 1; margin-bottom: 1px; }
+
+    .cal-popup {
+      display: none; margin-top: 1.5rem;
+      background: var(--cream); border-radius: 20px; padding: 1.5rem;
+      animation: slideDown 0.28s ease;
+    }
+    .cal-popup.open { display: block; }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .popup-title {
+      font-family: 'Fredoka One', cursive; font-size: 1.3rem;
+      color: var(--brown-dark); margin-bottom: 1rem;
+    }
+    .popup-cards {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;
+    }
+    .popup-card {
+      background: white; border-radius: 16px; padding: 1rem;
+      box-shadow: 0 3px 12px var(--shadow);
+    }
+    .popup-badge {
+      font-size: 0.68rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 2px; margin-bottom: 0.35rem; display: block;
+    }
+    .popup-badge.looks   { color: #D63B59; }
+    .popup-badge.career  { color: #2E6FA8; }
+    .popup-badge.wellness{ color: #2E7A46; }
+    .popup-otter-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+    .popup-otter-mini { width: 48px; height: 48px; flex-shrink: 0; }
+    .popup-otter-mini svg { width: 100%; height: 100%; }
+    .popup-otter-id { font-size: 0.78rem; color: var(--brown-mid); font-weight: 700; }
+    .popup-quote { font-size: 0.88rem; line-height: 1.6; color: var(--text-mid); font-style: italic; font-weight: 600; }
+
+    /* ── SIGNUP ── */
+    .signup-section { margin-bottom: 4rem; }
+    .signup-card {
+      background: linear-gradient(135deg, #4ABCC4 0%, #35A3AB 55%, #2E8A92 100%);
+      border-radius: 28px; padding: 3rem 2rem; text-align: center;
+      box-shadow: 0 8px 32px rgba(74,188,196,0.3); position: relative; overflow: hidden;
+    }
+    .signup-deco {
+      position: absolute; font-size: 9rem; right: -1rem; bottom: -2rem;
+      opacity: 0.1; line-height: 1; pointer-events: none;
+    }
+    .signup-title { font-family: 'Fredoka One', cursive; font-size: 2rem; color: white; margin-bottom: 0.75rem; }
+    .signup-desc {
+      color: rgba(255,255,255,0.92); font-size: 1rem; font-weight: 600;
+      max-width: 480px; margin: 0 auto 2rem;
+    }
+    .signup-form { display: flex; gap: 0.75rem; max-width: 480px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+    .signup-input {
+      flex: 1; min-width: 240px; padding: 0.9rem 1.25rem;
+      border: none; border-radius: 14px; font-size: 1rem;
+      font-family: 'Nunito', sans-serif; font-weight: 600; outline: none;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+    .signup-input::placeholder { color: #aaa; }
+    .signup-btn {
+      padding: 0.9rem 1.8rem; background: white; color: var(--teal-dark);
+      border: none; border-radius: 14px; font-size: 1rem;
+      font-family: 'Nunito', sans-serif; font-weight: 800; cursor: pointer;
+      transition: all 0.2s; box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+    .signup-btn:hover { background: var(--cream); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+    .signup-success {
+      display: none; color: white; font-weight: 700; font-size: 1.05rem;
+      margin-top: 1rem; animation: fadeUp 0.4s ease;
+    }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+    /* ── FOOTER ── */
+    footer { text-align: center; padding: 2rem 1rem; color: var(--text-light); font-size: 0.88rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .affirmations-grid { grid-template-columns: 1fr; }
+      .cal-cell { border-radius: 8px; font-size: 0.78rem; }
+      .cal-mini-otter { font-size: 0.8rem; }
+      .calendar-section { padding: 1.5rem 1rem; }
+      .popup-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-deco" id="header-deco"></div>
+  <div class="site-title">Ottermations</div>
+  <div class="site-tagline">Daily affirmations, delivered by the world's cutest aquatic friends 🦦</div>
+  <svg class="wave-divider" viewBox="0 0 1440 64" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 32 Q180 0 360 32 Q540 64 720 32 Q900 0 1080 32 Q1260 64 1440 32 L1440 64 L0 64 Z" fill="#FFF8EE"/>
+  </svg>
+</header>
+
+<div class="main-content">
+  <section class="today-banner">
+    <div class="today-label">Today's Ottermations</div>
+    <div class="today-date" id="today-date"></div>
+    <div class="today-sub">Three little otters have a message just for you ✨</div>
+  </section>
+
+  <div class="affirmations-grid" id="affirmations-grid"></div>
+
+  <section class="calendar-section">
+    <div class="sec-header">
+      <div class="sec-icon">📅</div>
+      <div>
+        <div class="sec-title">Otter Archives</div>
+        <div class="sec-sub">Click any past day to revisit those ottermations</div>
+      </div>
+    </div>
+    <div class="cal-day-headers" id="cal-headers"></div>
+    <div class="cal-grid" id="cal-grid"></div>
+    <div class="cal-popup" id="cal-popup">
+      <div class="popup-title" id="popup-title"></div>
+      <div class="popup-cards" id="popup-cards"></div>
+    </div>
+  </section>
+
+  <section class="signup-section">
+    <div class="signup-card">
+      <div class="signup-deco">🦦</div>
+      <div class="signup-title">Ottermations in Your Inbox</div>
+      <div class="signup-desc">Get your daily dose of otter wisdom delivered every morning. Start each day with a smile!</div>
+      <form class="signup-form" id="signup-form">
+        <input class="signup-input" type="email" id="email-input" placeholder="your@email.com" required>
+        <button class="signup-btn" type="submit">Subscribe 🦦</button>
+      </form>
+      <div class="signup-success" id="signup-success">You're in! Your first ottermation is on its way ✨</div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <p>Made with 🦦 and ❤️ — spreading good vibes, one otter at a time</p>
+  <p style="margin-top:0.4rem;font-size:0.8rem;">© 2026 Ottermations</p>
+</footer>
+
+<script>
+// ─────────────────────────────────────────
+// SEEDED RNG (LCG)
+// ─────────────────────────────────────────
+function makeRNG(seed) {
+  let s = Math.abs(seed) | 0 || 1;
+  return function() {
+    s = (Math.imul(1664525, s) + 1013904223) | 0;
+    return (s >>> 0) / 0x100000000;
+  };
+}
+function hashDate(str) {
+  let h = 2166136261;
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+function pickIdx(arr, rng) { return Math.floor(rng() * arr.length); }
+function shuffleFirst3(n, rng) {
+  const arr = Array.from({length: n}, (_, i) => i);
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// ─────────────────────────────────────────
+// AFFIRMATIONS
+// ─────────────────────────────────────────
+const LOOKS = [
+  "You are radiant just as you are — your unique beauty lights up every room you enter.",
+  "Confidence isn't about being perfect. It's about knowing your worth anyway.",
+  "You carry grace in every step. The world is genuinely better with you in it.",
+  "Your smile can change someone's entire day. Don't forget how powerful you are.",
+  "Beauty isn't something you have — it's something you radiate from deep within.",
+  "Stand tall, little otter! Your sparkle cannot be dimmed.",
+  "You are worthy of love, admiration, and your own genuine kindness.",
+  "Every version of you has been worthy. Today is absolutely no exception.",
+  "Your uniqueness is your superpower. There is no one else quite like you.",
+  "You don't need permission to feel beautiful. You already are, right now.",
+  "The way you show up for yourself matters. Keep choosing you every single day.",
+  "Your presence is magnetic — people are drawn to your authentic warmth.",
+  "You deserve to take up space. Your presence is a true gift to the world.",
+  "Glow, my friend. The world needs exactly the light only you can bring.",
+  "You are more than enough — you are extraordinary.",
+  "Self-love is your greatest accessory, and it looks amazing on you.",
+  "Your laugh, your quirks, your whole self — all of it is beautiful.",
+  "You are allowed to feel gorgeous today. In fact, it's encouraged.",
+  "Mirrors show you less than half the story — your energy is the real beauty.",
+  "The confidence you're looking for? It has been inside you all along.",
+];
+
+const CAREER = [
+  "Abundance flows to you naturally. You attract prosperity with every brave step.",
+  "Your hard work is building something remarkable. The results are coming.",
+  "You bring unique value to everything you touch. Your talents are deeply needed.",
+  "Financial freedom is not just a dream — it is your destination.",
+  "Every small step you take today is compounding into your future success.",
+  "You are deserving of opportunities, raises, promotions, and recognition.",
+  "Your ideas matter. The world needs you to share them boldly.",
+  "Success is a series of brave daily choices — and you are making them.",
+  "Abundance in all its forms flows freely and consistently into your life.",
+  "Opportunities are drawn to prepared minds — and yours is absolutely ready.",
+  "You are building a life of financial security and creative fulfillment.",
+  "Your career is unfolding exactly as it should. Trust the beautiful process.",
+  "You are capable of achieving everything you've set your heart and mind on.",
+  "Money is a tool, and you are growing wiser in how you use it every day.",
+  "Your work has impact. People feel it, even when you can't see it directly.",
+  "You are on the right path. Keep going — the breakthrough is closer than you think.",
+  "Wealth flows to those who serve with heart. You are one of them.",
+  "You are worthy of being paid well for the incredible value you bring.",
+  "Every setback has been a setup for a stronger comeback. This is your season.",
+  "You are a magnet for meaningful work and generous financial reward.",
+];
+
+const WELLNESS = [
+  "Your body is strong, capable, and worthy of rest, nourishment, and joy.",
+  "Peace is your natural state. Return to it as often as you need to.",
+  "You are deeply connected to something greater than yourself.",
+  "Healing is happening in you, even in the moments you cannot see it.",
+  "Honor your body today — it carries you through everything with loyalty.",
+  "Rest is productive. You are allowed to slow down and fully restore.",
+  "Your spirit is resilient. Every challenge has quietly made you stronger.",
+  "The universe supports your wellbeing in every single moment.",
+  "You are worthy of deep rest, vibrant health, and lasting inner peace.",
+  "Your intuition is your compass. Trust it with your whole heart.",
+  "Every breath is a new beginning. Breathe in possibility right now.",
+  "You are grounded, centered, and exactly where you need to be.",
+  "Your body deserves as much kindness as you freely give to others.",
+  "You are healing, growing, and becoming — all at the very same time.",
+  "Movement, stillness, nourishment — your body knows what it needs. Listen.",
+  "You are not behind. You are exactly on time for your own journey.",
+  "Spiritual growth happens in the quiet moments. You are evolving beautifully.",
+  "Your energy is sacred. It is okay to protect it with love and boundaries.",
+  "The way you care for yourself teaches the world how to care for you too.",
+  "You are whole. Right now. Exactly as you are. Completely and wonderfully whole.",
+];
+
+// ─────────────────────────────────────────
+// OTTER SVG GENERATORS
+// ─────────────────────────────────────────
+function seaOtterSVG(accessory) {
+  const acc = {
+    flower: `
+      <g transform="translate(157,58)">
+        <ellipse cx="0" cy="-9" rx="5" ry="9" fill="#FF9EC4"/>
+        <ellipse cx="0" cy="-9" rx="5" ry="9" fill="#FF9EC4" transform="rotate(60)"/>
+        <ellipse cx="0" cy="-9" rx="5" ry="9" fill="#FFE566" transform="rotate(120)"/>
+        <ellipse cx="0" cy="-9" rx="5" ry="9" fill="#FF6BAE" transform="rotate(180)"/>
+        <ellipse cx="0" cy="-9" rx="5" ry="9" fill="#FFE566" transform="rotate(240)"/>
+        <ellipse cx="0" cy="-9" rx="5" ry="9" fill="#FF9EC4" transform="rotate(300)"/>
+        <circle r="6" fill="#FFD700"/>
+      </g>
+      <g transform="translate(143,54)">
+        <ellipse cx="0" cy="-7" rx="4" ry="7" fill="#FFAA5E"/>
+        <ellipse cx="0" cy="-7" rx="4" ry="7" fill="#FFAA5E" transform="rotate(72)"/>
+        <ellipse cx="0" cy="-7" rx="4" ry="7" fill="#FF6BAE" transform="rotate(144)"/>
+        <ellipse cx="0" cy="-7" rx="4" ry="7" fill="#FFAA5E" transform="rotate(216)"/>
+        <ellipse cx="0" cy="-7" rx="4" ry="7" fill="#FF9EC4" transform="rotate(288)"/>
+        <circle r="5" fill="#FF8C00"/>
+      </g>`,
+    glasses: `
+      <ellipse cx="144" cy="97" rx="12" ry="9" fill="#FF8FA3" opacity="0.75"/>
+      <ellipse cx="170" cy="97" rx="12" ry="9" fill="#FF8FA3" opacity="0.75"/>
+      <ellipse cx="144" cy="97" rx="12" ry="9" fill="none" stroke="#D63B59" stroke-width="2"/>
+      <ellipse cx="170" cy="97" rx="12" ry="9" fill="none" stroke="#D63B59" stroke-width="2"/>
+      <line x1="156" y1="97" x2="158" y2="97" stroke="#D63B59" stroke-width="2.5"/>
+      <line x1="132" y1="95" x2="125" y2="92" stroke="#D63B59" stroke-width="2"/>
+      <line x1="182" y1="95" x2="189" y2="92" stroke="#D63B59" stroke-width="2"/>
+      <!-- Heart accents on lenses -->
+      <text x="140" y="100" font-size="8" text-anchor="middle" fill="white" opacity="0.9">♥</text>
+      <text x="166" y="100" font-size="8" text-anchor="middle" fill="white" opacity="0.9">♥</text>`,
+    hat: `
+      <ellipse cx="157" cy="64" rx="32" ry="9" fill="#3D2B1F"/>
+      <rect x="133" y="26" width="48" height="40" fill="#3D2B1F" rx="4"/>
+      <rect x="133" y="58" width="48" height="8" fill="#FF6BAE"/>
+      <circle cx="157" cy="28" r="5" fill="#FFD700"/>`,
+  };
+  return `<svg viewBox="0 0 220 185" xmlns="http://www.w3.org/2000/svg">
+    <!-- water -->
+    <ellipse cx="95" cy="174" rx="88" ry="13" fill="#A8D8EA" opacity="0.38"/>
+    <ellipse cx="95" cy="166" rx="62" ry="9" fill="#C5E8F0" opacity="0.3"/>
+    <!-- tail -->
+    <ellipse cx="22" cy="148" rx="21" ry="13" fill="#6A4D31" transform="rotate(22,22,148)"/>
+    <!-- body -->
+    <ellipse cx="95" cy="138" rx="72" ry="38" fill="#7B5B3A"/>
+    <!-- belly -->
+    <ellipse cx="95" cy="131" rx="52" ry="26" fill="#C4966E"/>
+    <!-- head -->
+    <circle cx="157" cy="100" r="42" fill="#7B5B3A"/>
+    <!-- ears -->
+    <ellipse cx="131" cy="66" rx="12" ry="10" fill="#7B5B3A"/>
+    <ellipse cx="183" cy="66" rx="12" ry="10" fill="#7B5B3A"/>
+    <ellipse cx="131" cy="66" rx="7.5" ry="6" fill="#C4966E"/>
+    <ellipse cx="183" cy="66" rx="7.5" ry="6" fill="#C4966E"/>
+    <!-- eyes -->
+    <circle cx="144" cy="97" r="13" fill="white"/>
+    <circle cx="170" cy="97" r="13" fill="white"/>
+    <circle cx="146" cy="99" r="8" fill="#1A0800"/>
+    <circle cx="172" cy="99" r="8" fill="#1A0800"/>
+    <circle cx="149" cy="95" r="3.5" fill="white"/>
+    <circle cx="175" cy="95" r="3.5" fill="white"/>
+    <!-- nose -->
+    <ellipse cx="157" cy="118" rx="8" ry="6" fill="#2D1200"/>
+    <!-- mouth -->
+    <path d="M148 125 Q157 132 166 125" stroke="#2D1200" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- whiskers -->
+    <line x1="110" y1="116" x2="149" y2="118" stroke="#C4966E" stroke-width="1.3" opacity="0.65"/>
+    <line x1="110" y1="123" x2="149" y2="122" stroke="#C4966E" stroke-width="1.3" opacity="0.65"/>
+    <line x1="165" y1="118" x2="204" y2="116" stroke="#C4966E" stroke-width="1.3" opacity="0.65"/>
+    <line x1="165" y1="122" x2="204" y2="123" stroke="#C4966E" stroke-width="1.3" opacity="0.65"/>
+    <!-- blush -->
+    <ellipse cx="133" cy="110" rx="12" ry="8" fill="#FFB5C2" opacity="0.55"/>
+    <ellipse cx="179" cy="110" rx="12" ry="8" fill="#FFB5C2" opacity="0.55"/>
+    <!-- left paw -->
+    <ellipse cx="42" cy="104" rx="16" ry="11" fill="#7B5B3A" transform="rotate(-28,42,104)"/>
+    <ellipse cx="42" cy="104" rx="10.5" ry="7" fill="#C4966E" transform="rotate(-28,42,104)"/>
+    <!-- shell -->
+    <ellipse cx="80" cy="88" rx="21" ry="15" fill="#E8C87A" transform="rotate(-12,80,88)"/>
+    <path d="M64 92 Q80 77 96 92" stroke="#B8962A" stroke-width="1.6" fill="none"/>
+    <line x1="80" y1="77" x2="80" y2="95" stroke="#B8962A" stroke-width="1" opacity="0.6"/>
+    <line x1="70" y1="80" x2="75" y2="93" stroke="#B8962A" stroke-width="1" opacity="0.5"/>
+    <line x1="90" y1="80" x2="85" y2="93" stroke="#B8962A" stroke-width="1" opacity="0.5"/>
+    <!-- right paw -->
+    <ellipse cx="110" cy="74" rx="16" ry="11" fill="#7B5B3A" transform="rotate(20,110,74)"/>
+    <ellipse cx="110" cy="74" rx="10.5" ry="7" fill="#C4966E" transform="rotate(20,110,74)"/>
+    <!-- accessory -->
+    ${acc[accessory] || ''}
+  </svg>`;
+}
+
+function riverOtterSVG(accessory) {
+  const acc = {
+    bowtie: `
+      <ellipse cx="86" cy="120" rx="14" ry="9" fill="#FF4466" transform="rotate(-8,86,120)"/>
+      <ellipse cx="114" cy="120" rx="14" ry="9" fill="#FF4466" transform="rotate(8,114,120)"/>
+      <circle cx="100" cy="120" r="6" fill="#CC1133"/>
+      <ellipse cx="86" cy="120" rx="14" ry="9" fill="none" stroke="#CC1133" stroke-width="1" transform="rotate(-8,86,120)" opacity="0.5"/>`,
+    flower: `
+      <g transform="translate(100,28)">
+        <ellipse cx="0" cy="-10" rx="5.5" ry="10" fill="#FF9EC4"/>
+        <ellipse cx="0" cy="-10" rx="5.5" ry="10" fill="#FF9EC4" transform="rotate(60)"/>
+        <ellipse cx="0" cy="-10" rx="5.5" ry="10" fill="#FFE566" transform="rotate(120)"/>
+        <ellipse cx="0" cy="-10" rx="5.5" ry="10" fill="#FF6BAE" transform="rotate(180)"/>
+        <ellipse cx="0" cy="-10" rx="5.5" ry="10" fill="#FFE566" transform="rotate(240)"/>
+        <ellipse cx="0" cy="-10" rx="5.5" ry="10" fill="#FFAA5E" transform="rotate(300)"/>
+        <circle r="7" fill="#FFD700"/>
+      </g>
+      <rect x="72" y="24" width="56" height="8" rx="4" fill="#4ABCC4" opacity="0.7"/>`,
+    scarf: `
+      <path d="M72 116 Q100 134 128 116 Q128 126 115 132 L110 160 Q105 170 100 160 Q95 170 90 160 L85 132 Q72 126 72 116 Z" fill="#FF8FA3"/>
+      <path d="M72 116 Q100 134 128 116 Q128 120 100 126 Q72 120 72 116 Z" fill="#FF6B9D"/>
+      <line x1="72" y1="122" x2="128" y2="122" stroke="#FFB5C2" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.6"/>`,
+  };
+  return `<svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+    <!-- tail -->
+    <ellipse cx="100" cy="203" rx="40" ry="18" fill="#5B4020"/>
+    <!-- body -->
+    <ellipse cx="100" cy="148" rx="46" ry="60" fill="#6B4E2E"/>
+    <!-- belly -->
+    <ellipse cx="100" cy="140" rx="30" ry="50" fill="#B8895A"/>
+    <!-- head -->
+    <circle cx="100" cy="72" r="48" fill="#6B4E2E"/>
+    <!-- ears -->
+    <ellipse cx="67" cy="33" rx="15" ry="13" fill="#6B4E2E"/>
+    <ellipse cx="133" cy="33" rx="15" ry="13" fill="#6B4E2E"/>
+    <ellipse cx="67" cy="33" rx="9.5" ry="8" fill="#B8895A"/>
+    <ellipse cx="133" cy="33" rx="9.5" ry="8" fill="#B8895A"/>
+    <!-- eyes -->
+    <circle cx="84" cy="68" r="14" fill="white"/>
+    <circle cx="116" cy="68" r="14" fill="white"/>
+    <circle cx="86" cy="70" r="9" fill="#1A0800"/>
+    <circle cx="118" cy="70" r="9" fill="#1A0800"/>
+    <circle cx="89" cy="66" r="3.8" fill="white"/>
+    <circle cx="121" cy="66" r="3.8" fill="white"/>
+    <!-- nose -->
+    <ellipse cx="100" cy="91" rx="9.5" ry="7" fill="#2D1200"/>
+    <!-- mouth -->
+    <path d="M88 100 Q100 108 112 100" stroke="#2D1200" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- whiskers -->
+    <line x1="55" y1="88" x2="91" y2="91" stroke="#B8895A" stroke-width="1.3" opacity="0.65"/>
+    <line x1="55" y1="96" x2="91" y2="96" stroke="#B8895A" stroke-width="1.3" opacity="0.65"/>
+    <line x1="109" y1="91" x2="145" y2="88" stroke="#B8895A" stroke-width="1.3" opacity="0.65"/>
+    <line x1="109" y1="96" x2="145" y2="96" stroke="#B8895A" stroke-width="1.3" opacity="0.65"/>
+    <!-- blush -->
+    <ellipse cx="74" cy="80" rx="13" ry="9" fill="#FFB5C2" opacity="0.55"/>
+    <ellipse cx="126" cy="80" rx="13" ry="9" fill="#FFB5C2" opacity="0.55"/>
+    <!-- paws -->
+    <ellipse cx="64" cy="162" rx="17" ry="11" fill="#6B4E2E" transform="rotate(-12,64,162)"/>
+    <ellipse cx="64" cy="162" rx="11" ry="7" fill="#B8895A" transform="rotate(-12,64,162)"/>
+    <ellipse cx="136" cy="162" rx="17" ry="11" fill="#6B4E2E" transform="rotate(12,136,162)"/>
+    <ellipse cx="136" cy="162" rx="11" ry="7" fill="#B8895A" transform="rotate(12,136,162)"/>
+    <!-- accessory -->
+    ${acc[accessory] || ''}
+  </svg>`;
+}
+
+function asianOtterSVG(accessory) {
+  const acc = {
+    heart: `
+      <!-- heart pin near left ear -->
+      <line x1="60" y1="38" x2="50" y2="22" stroke="#888" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M50 22 C44 14 36 18 42 26 C42 26 50 32 50 22 C50 32 58 26 58 26 C64 18 56 14 50 22 Z" fill="#FF4D8A"/>
+      <!-- small hearts -->
+      <text x="148" y="48" font-size="11" fill="#FF8FA3" opacity="0.7">♥</text>
+      <text x="32" y="80" font-size="9" fill="#FF8FA3" opacity="0.5">♥</text>`,
+    star: `
+      <!-- star crown -->
+      <rect x="74" y="30" width="52" height="10" rx="5" fill="#FFD700"/>
+      <polygon points="84,30 87,18 90,30" fill="#FFD700"/>
+      <polygon points="100,30 103,15 106,30" fill="#FFD700"/>
+      <polygon points="116,30 119,18 122,30" fill="#FFD700"/>
+      <circle cx="87" cy="20" r="5" fill="#FFD700"/>
+      <circle cx="103" cy="17" r="5.5" fill="#FFD700"/>
+      <circle cx="119" cy="20" r="5" fill="#FFD700"/>
+      <!-- sparkles -->
+      <text x="24" y="58" font-size="12" fill="#FFD700" opacity="0.6">✦</text>
+      <text x="152" y="52" font-size="10" fill="#FFD700" opacity="0.6">✦</text>`,
+    beret: `
+      <!-- beret (tilted) -->
+      <ellipse cx="108" cy="30" rx="36" ry="22" fill="#4ABCC4" transform="rotate(-12,108,30)"/>
+      <ellipse cx="100" cy="42" rx="34" ry="9" fill="#2E9DA6"/>
+      <circle cx="118" cy="18" r="5" fill="#2E9DA6"/>
+      <!-- polka dots on beret -->
+      <circle cx="100" cy="25" r="2.5" fill="white" opacity="0.4"/>
+      <circle cx="114" cy="30" r="2.5" fill="white" opacity="0.4"/>
+      <circle cx="92" cy="35" r="2.5" fill="white" opacity="0.4"/>`,
+  };
+  return `<svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+    <!-- body -->
+    <circle cx="100" cy="158" r="56" fill="#8B6844"/>
+    <!-- belly -->
+    <ellipse cx="100" cy="155" rx="38" ry="50" fill="#D4A878"/>
+    <!-- feet -->
+    <ellipse cx="74" cy="207" rx="22" ry="13" fill="#7A5A35" transform="rotate(-15,74,207)"/>
+    <ellipse cx="126" cy="207" rx="22" ry="13" fill="#7A5A35" transform="rotate(15,126,207)"/>
+    <!-- toe dots -->
+    <circle cx="62" cy="210" r="4" fill="#9A7855"/>
+    <circle cx="72" cy="215" r="4" fill="#9A7855"/>
+    <circle cx="83" cy="214" r="4" fill="#9A7855"/>
+    <circle cx="117" cy="214" r="4" fill="#9A7855"/>
+    <circle cx="128" cy="215" r="4" fill="#9A7855"/>
+    <circle cx="138" cy="210" r="4" fill="#9A7855"/>
+    <!-- head (very large) -->
+    <circle cx="100" cy="80" r="56" fill="#8B6844"/>
+    <!-- face area (lighter) -->
+    <ellipse cx="100" cy="88" rx="42" ry="40" fill="#C49868"/>
+    <!-- ears -->
+    <circle cx="60" cy="33" r="17" fill="#8B6844"/>
+    <circle cx="140" cy="33" r="17" fill="#8B6844"/>
+    <circle cx="60" cy="33" r="11" fill="#C49868"/>
+    <circle cx="140" cy="33" r="11" fill="#C49868"/>
+    <!-- HUGE eyes -->
+    <circle cx="80" cy="76" r="21" fill="white"/>
+    <circle cx="120" cy="76" r="21" fill="white"/>
+    <circle cx="80" cy="78" r="15" fill="#4A2C0A"/>
+    <circle cx="120" cy="78" r="15" fill="#4A2C0A"/>
+    <circle cx="82" cy="80" r="9.5" fill="#0A0400"/>
+    <circle cx="122" cy="80" r="9.5" fill="#0A0400"/>
+    <circle cx="87" cy="72" r="5.5" fill="white"/>
+    <circle cx="127" cy="72" r="5.5" fill="white"/>
+    <circle cx="76" cy="82" r="2.2" fill="white"/>
+    <circle cx="116" cy="82" r="2.2" fill="white"/>
+    <!-- nose (tiny, cute) -->
+    <ellipse cx="100" cy="100" rx="7" ry="5.5" fill="#2D1200"/>
+    <!-- mouth -->
+    <path d="M91 108 Q100 115 109 108" stroke="#2D1200" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- blush (BIG, defining feature) -->
+    <ellipse cx="68" cy="92" rx="17" ry="10" fill="#FFB5C2" opacity="0.6"/>
+    <ellipse cx="132" cy="92" rx="17" ry="10" fill="#FFB5C2" opacity="0.6"/>
+    <!-- tiny arms/paws -->
+    <ellipse cx="52" cy="155" rx="14" ry="10" fill="#8B6844" transform="rotate(-30,52,155)"/>
+    <ellipse cx="52" cy="155" rx="9" ry="6" fill="#C49868" transform="rotate(-30,52,155)"/>
+    <ellipse cx="148" cy="155" rx="14" ry="10" fill="#8B6844" transform="rotate(30,148,155)"/>
+    <ellipse cx="148" cy="155" rx="9" ry="6" fill="#C49868" transform="rotate(30,148,155)"/>
+    <!-- accessory -->
+    ${acc[accessory] || ''}
+  </svg>`;
+}
+
+// ─────────────────────────────────────────
+// OTTER ROSTER
+// ─────────────────────────────────────────
+const OTTERS = [
+  { name: 'Marina the Sea Otter', label: 'Sea Otter · Flower Crown',  svg: seaOtterSVG('flower'),  emoji: '🌸' },
+  { name: 'Pearl the Sea Otter',  label: 'Sea Otter · Heart Glasses', svg: seaOtterSVG('glasses'), emoji: '🩷' },
+  { name: 'Sandy the Sea Otter',  label: 'Sea Otter · Top Hat',       svg: seaOtterSVG('hat'),     emoji: '🎩' },
+  { name: 'River the River Otter',label: 'River Otter · Bow Tie',     svg: riverOtterSVG('bowtie'),emoji: '🎀' },
+  { name: 'Fern the River Otter', label: 'River Otter · Flower Crown',svg: riverOtterSVG('flower'),emoji: '🌼' },
+  { name: 'Cedar the River Otter',label: 'River Otter · Cozy Scarf',  svg: riverOtterSVG('scarf'), emoji: '🧣' },
+  { name: 'Mochi the Tiny Otter', label: 'Asian Small-Clawed · Heart Pin', svg: asianOtterSVG('heart'), emoji: '💕' },
+  { name: 'Luna the Tiny Otter',  label: 'Asian Small-Clawed · Star Crown', svg: asianOtterSVG('star'),  emoji: '⭐' },
+  { name: 'Boba the Tiny Otter',  label: 'Asian Small-Clawed · Beret', svg: asianOtterSVG('beret'), emoji: '🫧' },
+];
+
+// ─────────────────────────────────────────
+// DAILY CONTENT
+// ─────────────────────────────────────────
+function getDailyContent(dateStr) {
+  const rng = makeRNG(hashDate(dateStr));
+  const otterOrder = shuffleFirst3(9, rng);
+  return {
+    looks:    { affirmation: LOOKS[pickIdx(LOOKS, rng)],     otter: OTTERS[otterOrder[0]] },
+    career:   { affirmation: CAREER[pickIdx(CAREER, rng)],   otter: OTTERS[otterOrder[1]] },
+    wellness: { affirmation: WELLNESS[pickIdx(WELLNESS, rng)],otter: OTTERS[otterOrder[2]] },
+  };
+}
+
+// ─────────────────────────────────────────
+// DATE HELPERS
+// ─────────────────────────────────────────
+function dateToStr(d) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${day}`;
+}
+function addDays(d, n) {
+  const r = new Date(d); r.setDate(r.getDate() + n); return r;
+}
+function formatDisplayDate(d) {
+  return d.toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+}
+function formatShortDate(d) {
+  return d.toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' });
+}
+
+// ─────────────────────────────────────────
+// RENDER TODAY'S CARDS
+// ─────────────────────────────────────────
+const CATEGORIES = [
+  { key:'looks',    label:'Looks & Confidence', cls:'looks' },
+  { key:'career',   label:'Career & Abundance', cls:'career' },
+  { key:'wellness', label:'Body & Spirit',       cls:'wellness' },
+];
+
+function renderTodayCards(today) {
+  const dateStr = dateToStr(today);
+  const content = getDailyContent(dateStr);
+  document.getElementById('today-date').textContent = formatDisplayDate(today);
+  const grid = document.getElementById('affirmations-grid');
+  grid.innerHTML = CATEGORIES.map(cat => {
+    const data = content[cat.key];
+    return `<div class="otter-card ${cat.cls}">
+      <span class="card-badge">${cat.label}</span>
+      <div class="otter-art">${data.otter.svg}</div>
+      <div class="otter-name-tag">${data.otter.name} ${data.otter.emoji}</div>
+      <div class="affirmation-quote">${data.affirmation}</div>
+    </div>`;
+  }).join('');
+}
+
+// ─────────────────────────────────────────
+// RENDER CALENDAR
+// ─────────────────────────────────────────
+let selectedDateStr = null;
+
+function renderCalendar(today) {
+  const todayStr = dateToStr(today);
+  // Range: 14 days ago → today
+  const rangeStart = addDays(today, -14);
+  // Find Monday of the week containing rangeStart
+  const dow = rangeStart.getDay(); // 0=Sun
+  const mondayOffset = (dow === 0) ? -6 : 1 - dow;
+  const calStart = addDays(rangeStart, mondayOffset);
+
+  // Build header (Mon–Sun)
+  const dayNames = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  document.getElementById('cal-headers').innerHTML =
+    dayNames.map(d => `<div class="cal-dh">${d}</div>`).join('');
+
+  // Build cells: from calStart until we cover today + rest of that week
+  const todayDow = today.getDay();
+  const daysToEnd = (todayDow === 0) ? 0 : 7 - todayDow; // days till end of week (Sun)
+  const calEnd = addDays(today, daysToEnd);
+
+  const cells = [];
+  let cur = new Date(calStart);
+  while (cur <= calEnd) {
+    cells.push(new Date(cur));
+    cur = addDays(cur, 1);
+  }
+
+  const grid = document.getElementById('cal-grid');
+  grid.innerHTML = cells.map(d => {
+    const dStr = dateToStr(d);
+    const isPast  = d < today && dStr >= dateToStr(rangeStart);
+    const isToday = dStr === todayStr;
+    const isFuture = d > today;
+    const hasContent = isPast || isToday;
+    const content = hasContent ? getDailyContent(dStr) : null;
+    const emoji = hasContent ? content.looks.otter.emoji : '';
+
+    let cls = 'cal-cell';
+    if (isToday)   cls += ' is-today has-content';
+    else if (hasContent) cls += ' has-content';
+    else if (isFuture)  cls += ' future';
+    else cls += ' blank';
+
+    const dayNum = d.getDate();
+    const dataAttr = hasContent ? `data-date="${dStr}"` : '';
+    return `<div class="${cls}" ${dataAttr}>
+      ${emoji ? `<div class="cal-mini-otter">${emoji}</div>` : ''}
+      <div>${dayNum}</div>
+    </div>`;
+  }).join('');
+
+  // Click handler
+  grid.querySelectorAll('.cal-cell.has-content').forEach(cell => {
+    cell.addEventListener('click', () => {
+      const dStr = cell.dataset.date;
+      if (!dStr) return;
+      if (selectedDateStr === dStr) {
+        // deselect
+        selectedDateStr = null;
+        cell.classList.remove('selected');
+        document.getElementById('cal-popup').classList.remove('open');
+        return;
+      }
+      grid.querySelectorAll('.selected').forEach(c => c.classList.remove('selected'));
+      cell.classList.add('selected');
+      selectedDateStr = dStr;
+      showPopup(dStr);
+    });
+  });
+}
+
+function showPopup(dStr) {
+  const d = new Date(dStr + 'T12:00:00');
+  const content = getDailyContent(dStr);
+  document.getElementById('popup-title').textContent = formatShortDate(d) + ' Ottermations';
+  document.getElementById('popup-cards').innerHTML = CATEGORIES.map(cat => {
+    const data = content[cat.key];
+    return `<div class="popup-card">
+      <span class="popup-badge ${cat.cls}">${cat.label}</span>
+      <div class="popup-otter-row">
+        <div class="popup-otter-mini">${data.otter.svg}</div>
+        <div class="popup-otter-id">${data.otter.name} ${data.otter.emoji}</div>
+      </div>
+      <div class="popup-quote">${data.affirmation}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('cal-popup').classList.add('open');
+  document.getElementById('cal-popup').scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+
+// ─────────────────────────────────────────
+// HEADER BUBBLES
+// ─────────────────────────────────────────
+function spawnBubbles() {
+  const container = document.getElementById('header-deco');
+  for (let i = 0; i < 12; i++) {
+    const b = document.createElement('div');
+    b.className = 'hbubble';
+    const size = 20 + Math.random() * 60;
+    b.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random()*100}%;
+      bottom:0;
+      animation-duration:${6 + Math.random()*8}s;
+      animation-delay:${Math.random()*6}s;
+    `;
+    container.appendChild(b);
+  }
+}
+
+// ─────────────────────────────────────────
+// EMAIL SIGNUP
+// ─────────────────────────────────────────
+document.getElementById('signup-form').addEventListener('submit', e => {
+  e.preventDefault();
+  const email = document.getElementById('email-input').value;
+  if (!email) return;
+  document.getElementById('signup-form').style.display = 'none';
+  document.getElementById('signup-success').style.display = 'block';
+});
+
+// ─────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────
+const today = new Date();
+spawnBubbles();
+renderTodayCards(today);
+renderCalendar(today);
+</script>
+</body>
+</html>
